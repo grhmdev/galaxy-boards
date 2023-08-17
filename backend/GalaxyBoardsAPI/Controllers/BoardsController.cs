@@ -10,6 +10,7 @@ namespace GalaxyBoardsAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Produces("application/json")]
     public class BoardsController : ControllerBase
     {
         private readonly IEntityRepository<Board> _boardRepo;
@@ -29,7 +30,9 @@ namespace GalaxyBoardsAPI.Controllers
             _ticketPlacementRepo = ticketPlacementRepo; 
         }
 
-        // GET: api/boards
+        /// <summary>
+        /// Lists stored boards
+        /// </summary>
         [HttpGet]
         public ActionResult<QueryResult<BoardBrief>> QueryBoards()
         {
@@ -39,7 +42,12 @@ namespace GalaxyBoardsAPI.Controllers
             };
         }
 
-        // GET: api/boards/5
+        /// <summary>
+        /// Looks up a board by ID
+        /// </summary>
+        /// <param name="id">ID of board to find</param>
+        /// <response code="200">Board found</response>
+        /// <response code="404">Board not found</response>
         [HttpGet("{id}")]
         public ActionResult<BoardDetail> GetBoard(Guid id)
         {
@@ -53,7 +61,13 @@ namespace GalaxyBoardsAPI.Controllers
             return boardDto;
         }
 
-        // PUT: api/boards/5
+        /// <summary>
+        /// Updates an existing board, including its columns and any ticket placements
+        /// </summary>
+        /// <param name="id">ID of board to update</param>
+        /// <param name="updated">Board update data</param>
+        /// <response code="200">Board successfully updated</response>
+        /// <response code="404">Board not found</response>
         [HttpPut("{id}")]
         public IActionResult PutBoard(Guid id, BoardUpdate updated)
         {
@@ -89,7 +103,12 @@ namespace GalaxyBoardsAPI.Controllers
             return Ok();
         }
 
-        // POST: api/boards
+        /// <summary>
+        /// Creates a new board
+        /// </summary>
+        /// <param name="boardData">Board data</param>
+        /// <response code="200">Board successfully created</response>
+        /// <response code="400">Invalid payload data</response>
         [HttpPost]
         public ActionResult<PostResult> PostBoard(BoardPostData boardData)
         {
@@ -108,7 +127,12 @@ namespace GalaxyBoardsAPI.Controllers
             };
         }
 
-        // DELETE: api/boards/5
+        /// <summary>
+        /// Deletes a board and any associated board columns and their ticket placements
+        /// </summary>
+        /// <param name="id">ID of board to delete</param>
+        /// <response code="200">Board successfully deleted</response>
+        /// <response code="404">Board not found</response>
         [HttpDelete("{id}")]
         public IActionResult DeleteBoard(Guid id)
         {

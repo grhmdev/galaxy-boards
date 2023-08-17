@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using GalaxyBoardsAPI.Data.Repository;
 using GalaxyBoardsAPI.Data.Entities;
 using GalaxyBoardsAPI.Data.Search;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
@@ -32,9 +34,19 @@ builder.Services.AddScoped<IEntityRepository<TicketPlacement>, EntityRepository<
 builder.Services.AddScoped<IEntityRepository<Board>, EntityRepository<Board>>();
 builder.Services.AddScoped<IEntityRepository<BoardColumn>, EntityRepository<BoardColumn>>();
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "GalaxyBoards API",
+        Description = "An ASP.NET Core Web API for creating and managing Kanban-style boards"
+    });
+
+    var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+});
 
 var app = builder.Build();
 

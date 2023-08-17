@@ -1,0 +1,1135 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "GalaxyBoards API",
+    "description": "An ASP.NET Core Web API for creating and managing Kanban-style boards",
+    "version": "v1"
+  },
+  "paths": {
+    "/api/Boards": {
+      "get": {
+        "tags": [
+          "Boards"
+        ],
+        "summary": "Lists stored boards",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BoardBriefQueryResult"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Boards"
+        ],
+        "summary": "Creates a new board",
+        "requestBody": {
+          "description": "Board data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BoardPostData"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BoardPostData"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BoardPostData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Board successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostResult"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid payload data"
+          }
+        }
+      }
+    },
+    "/api/Boards/{id}": {
+      "get": {
+        "tags": [
+          "Boards"
+        ],
+        "summary": "Looks up a board by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of board to find",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Board found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BoardDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Board not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Boards"
+        ],
+        "summary": "Updates an existing board, including its columns and any ticket placements",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of board to update",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Board update data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BoardUpdate"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BoardUpdate"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BoardUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Board successfully updated"
+          },
+          "404": {
+            "description": "Board not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Boards"
+        ],
+        "summary": "Deletes a board and any associated board columns and their ticket placements",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of board to delete",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Board successfully deleted"
+          },
+          "404": {
+            "description": "Board not found"
+          }
+        }
+      }
+    },
+    "/api/Projects": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Lists stored projects",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectBriefQueryResult"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Creates a new project",
+        "requestBody": {
+          "description": "Project data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectPostData"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectPostData"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectPostData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Project successfully created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Projects/{id}": {
+      "get": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Looks up a project by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of project to find",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Project found matching ID",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProjectDetail"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Updates an existing project",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the project to update",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Project update data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectUpdate"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectUpdate"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProjectUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Project updated successfully"
+          },
+          "404": {
+            "description": "Project not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Projects"
+        ],
+        "summary": "Deletes a project and all associated boards and tickets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of project to delete",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Project successfully deleted"
+          },
+          "404": {
+            "description": "Project not found"
+          }
+        }
+      }
+    },
+    "/api/Tickets": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Queries stored tickets",
+        "description": "All parameters are optional. A request without any parameters set will return all stored tickets without any filtering or sorting applied.",
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Filters tickets by those whose names or descriptions contain 1 or more of the provided search terms/words",
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "description": "The ticket property to sort tickets by, before filtering",
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "orderAscending",
+            "in": "query",
+            "description": "The sort direction to use when `orderBy` is provided. Set to `true` for ascending order. Defaults to descending order.",
+            "style": "form",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum tickets that will be returned. May be used for pagination when combined with `offset`.",
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "The tickets to skip. May be used for pagination when combined with `limit`.",
+            "style": "form",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "projectId",
+            "in": "query",
+            "description": "Filters tickets by their associated project ID",
+            "style": "form",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful query",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketBriefQueryResult"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Creates a new ticket",
+        "requestBody": {
+          "description": "Ticket data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketPostData"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketPostData"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketPostData"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully created ticket",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PostResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Tickets/{id}": {
+      "get": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Looks up a ticket by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of ticket to retrieve",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ticket found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TicketDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ticket not found"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Updates an existing ticket",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of ticket to update",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Ticket update data",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketUpdate"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketUpdate"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/TicketUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ticket successfully updated"
+          },
+          "400": {
+            "description": "Invalid payload data"
+          },
+          "404": {
+            "description": "Ticket not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Tickets"
+        ],
+        "summary": "Deletes a ticket by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the ticket to delete",
+            "required": true,
+            "style": "simple",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ticket successfully deleted"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "BoardBrief": {
+        "required": [
+          "id",
+          "links",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "links": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "description": "Describes a Board entity in brief"
+      },
+      "BoardBriefQueryResult": {
+        "required": [
+          "items",
+          "totalRecords"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BoardBrief"
+            }
+          },
+          "totalRecords": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Data returned in response to a GET request to queryable endpoints. Contains a list of records matching any given query parameters, and the total count."
+      },
+      "BoardColumn": {
+        "required": [
+          "id",
+          "index",
+          "name",
+          "ticketPlacements"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "index": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ticketPlacements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TicketPlacement"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "description": "Represents a single column on a `Board`"
+      },
+      "BoardColumnUpdate": {
+        "required": [
+          "index",
+          "name",
+          "ticketPlacements"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Set to `null` to create a new column on the board, or set to the ID of an existing board column to update it.",
+            "format": "uuid",
+            "nullable": true
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "index": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ticketPlacements": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TicketPlacementUpdate"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "description": "Board Column update data"
+      },
+      "BoardDetail": {
+        "required": [
+          "columns",
+          "id",
+          "links",
+          "name",
+          "project"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "links": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "project": {
+            "$ref": "#/components/schemas/ProjectBrief"
+          },
+          "columns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BoardColumn"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "description": "Describes a Board entity in full"
+      },
+      "BoardPostData": {
+        "required": [
+          "columns",
+          "name",
+          "projectId"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "columns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BoardPostDataColumn"
+            }
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Required data for Board creation"
+      },
+      "BoardPostDataColumn": {
+        "required": [
+          "index",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "index": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Required data for Board Column creation"
+      },
+      "BoardUpdate": {
+        "required": [
+          "columns",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "columns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BoardColumnUpdate"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "description": "Board update data"
+      },
+      "PostResult": {
+        "required": [
+          "createdId"
+        ],
+        "type": "object",
+        "properties": {
+          "createdId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Data returned in response to a successful POST request. Contains the ID of the newly created entity."
+      },
+      "ProjectBrief": {
+        "required": [
+          "hexColorCode",
+          "id",
+          "links",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "hexColorCode": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "links": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "description": "Describes a Project entity in brief"
+      },
+      "ProjectBriefQueryResult": {
+        "required": [
+          "items",
+          "totalRecords"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectBrief"
+            }
+          },
+          "totalRecords": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Data returned in response to a GET request to queryable endpoints. Contains a list of records matching any given query parameters, and the total count."
+      },
+      "ProjectDetail": {
+        "required": [
+          "boards",
+          "hexColorCode",
+          "id",
+          "links",
+          "name",
+          "tickets"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "hexColorCode": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "links": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "tickets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TicketBrief"
+            }
+          },
+          "boards": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BoardBrief"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "description": "Describes a Project entity in full"
+      },
+      "ProjectPostData": {
+        "required": [
+          "hexColorCode",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "hexColorCode": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Required data for Project creation"
+      },
+      "ProjectUpdate": {
+        "required": [
+          "hexColorCode",
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "hexColorCode": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Project update data"
+      },
+      "TicketBrief": {
+        "required": [
+          "id",
+          "links",
+          "name",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "status": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "links": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false,
+        "description": "Describes a Ticket entity in brief"
+      },
+      "TicketBriefQueryResult": {
+        "required": [
+          "items",
+          "totalRecords"
+        ],
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TicketBrief"
+            }
+          },
+          "totalRecords": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Data returned in response to a GET request to queryable endpoints. Contains a list of records matching any given query parameters, and the total count."
+      },
+      "TicketDetail": {
+        "required": [
+          "description",
+          "id",
+          "links",
+          "name",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "status": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "links": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "description": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Describes a Ticket entity in full"
+      },
+      "TicketPlacement": {
+        "required": [
+          "boardColumnId",
+          "id",
+          "index",
+          "ticketId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "ticketId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "boardColumnId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "index": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Represents a TicketPlacement entity. This describes a placement of a `Ticket` onto a `BoardColumn`."
+      },
+      "TicketPlacementUpdate": {
+        "required": [
+          "index",
+          "ticketId"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Set to `null` to create a new ticket placement, or set to the ID of an existing ticket placement to update it.",
+            "format": "uuid",
+            "nullable": true
+          },
+          "index": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "ticketId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Ticket Placement update data"
+      },
+      "TicketPostData": {
+        "required": [
+          "description",
+          "name",
+          "projectId",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "status": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "projectId": {
+            "type": "string",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Required data for Ticket creation"
+      },
+      "TicketUpdate": {
+        "required": [
+          "description",
+          "name",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "status": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "description": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Ticket update data"
+      }
+    }
+  }
+}
