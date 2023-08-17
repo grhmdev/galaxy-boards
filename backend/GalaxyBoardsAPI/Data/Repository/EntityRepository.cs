@@ -34,6 +34,7 @@ namespace GalaxyBoardsAPI.Data.Repository
         /// <param name="filter"></param>
         /// <param name="orderBy"></param>
         /// <param name="take">Upper limit to take from database</param>
+        /// <param name="skip"></param>
         /// <returns></returns>
         public IEnumerable<TEntity> Get(
             Expression<Func<TEntity, bool>>? filter = null,
