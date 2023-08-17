@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+   .table-striped tbody tr:nth-child(odd) {
+      @apply bg-gray-100;
+   }
+}
+
+html,
+body {
+   height: 100%;
+}
+
+body {
+   margin: 0;
+   font-size: 16px;
+   -webkit-font-smoothing: antialiased;
+   -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+      monospace;
+}
+
+.grow-999 {
+   flex-grow: 999;
+}
+
+.min-inline-size-50 {
+   min-inline-size: 50%;
+}
+
+.ticket-card-ghost {
+   border: 1px solid black;
+   border: 2px dotted gray;
+   font-size: 0;
+}
+
+.ticket-card-ghost div {
+   font-size: 0;
+   background: none;
+}
+
+.ticket-card-ghost-in-bin {
+   opacity: 0;
+   background: red;
+}
