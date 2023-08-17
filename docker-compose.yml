@@ -3,7 +3,7 @@ version: '3.1'
 services:
 
   postgres:
-    container_name: postgres
+    container_name: gb-postgres
     image: postgres
     restart: always
     environment:
@@ -21,3 +21,17 @@ services:
       PGADMIN_LISTEN_PORT: 5050
     ports:
       - 5050:5050
+
+  frontend:
+    container_name: gb-frontend
+    build: ./frontend
+    ports:
+      - 8080:80
+
+  backend:
+    container_name: gb-backend
+    build: ./backend
+    environment:
+      - ConnectionStrings:GalaxyBoardsDbPostgres=Host=localhost; Database=GalaxyBoards; Username=postgres; Password=secret;
+    ports:
+      - 7093:80
