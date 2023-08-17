@@ -6,20 +6,22 @@ import { RootState } from "../../store";
 
 const TicketCard = (props: { ticketId: string; className?: string }) => {
    const dispatch = useDispatch();
-   const ticket = useSelector(
-      (state: RootState) =>
-         state.projects.activeProject!.tickets.find(
-            (t) => t.id === props.ticketId
-         )!
+   const ticket = useSelector((state: RootState) =>
+      state.projects.activeProject!.tickets.find((t) => t.id === props.ticketId)
    );
 
    const handleOpenTicket = useCallback(() => {
+      if (!ticket) return;
       dispatch(
          openEditTicketDialog({
             ticketId: ticket.id,
          })
       );
-   }, [dispatch, ticket.id]);
+   }, [dispatch, ticket]);
+
+   if (!ticket) {
+      return <></>;
+   }
 
    return (
       <div
