@@ -19,7 +19,7 @@ const CreateBoardDialog = () => {
          dispatch(loadBoard({ boardId }));
          dispatch(showSuccessAlert({ message: `Board created` }));
       },
-      [closeDialog]
+      [dispatch, closeDialog]
    );
 
    return (

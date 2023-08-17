@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
-import { BoardDetail } from "../../api/types";
+import { useCallback } from "react";
 import { IconButton } from "../common/Buttons";
 import Card from "../common/Card";
 import { BoardIcon, EditIcon, RefreshIcon } from "../common/Icons";
@@ -34,7 +33,7 @@ const BoardCard = (props: { boardId: string }) => {
             message: `Reloaded board`,
          })
       );
-   }, [dispatch, board?.name, reloadBoard]);
+   }, [dispatch, reloadBoard]);
 
    const handleEditBoard = useCallback(() => {
       dispatch(openEditBoardDialog({ boardId: board.id }));

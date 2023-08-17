@@ -37,7 +37,7 @@ const EditTicketDialog = () => {
       dispatch(reloadProjectTickets({}));
       closeDialog();
       dispatch(showSuccessAlert({ message: `Ticket updated` }));
-   }, [dispatch, closeDialog, ticket?.name]);
+   }, [dispatch, closeDialog]);
 
    return (
       <Dialog

@@ -37,7 +37,7 @@ const EditBoardDialog = () => {
       closeDialog();
       dispatch(loadBoard({ boardId }));
       dispatch(showSuccessAlert({ message: `Board updated` }));
-   }, [dispatch, closeDialog, board?.name]);
+   }, [dispatch, closeDialog, boardId]);
 
    return (
       <Dialog title="Edit Board" closeDialog={closeDialog}>

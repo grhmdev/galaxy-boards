@@ -26,7 +26,7 @@ const EditProjectDialog = (props: { project: ProjectDetail }) => {
             message: `Project updated`,
          })
       );
-   }, [dispatch, closeDialog, props.project.name]);
+   }, [dispatch, closeDialog]);
 
    return (
       <Dialog title="Edit Project" closeDialog={closeDialog}>
