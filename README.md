@@ -1,8 +1,8 @@
-# galaxy-boards 🌌
+# Galaxy Boards 🌌
 
 Galaxy Boards is a web application for creating Kanban-style boards for managing personal projects.
 
-It follows an n-tier architecture, with the following layers:
+It is composed from the following tiers:
 
 - **Frontend**
     * Single page application that allows the user to create, view and edit project data
